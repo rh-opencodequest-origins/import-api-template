@@ -61,22 +61,22 @@ spec:
 
     - title: New Component details
       required:
-        - envelopeGitlabOrganization
-        - envelopeRepositoryName
+        - allLocationGitlabOrganization
+        - allLocationRepositoryName
         - system
         - componentOwner
         - lifecycle
 
       properties:
-        envelopeGitlabOrganization:
+        allLocationGitlabOrganization:
           title: Component GitLab Organization
           type: string
           default: parasol
-        envelopeRepositoryName:
+        allLocationRepositoryName:
           title: Component Repository name
           type: string
           description: Please ensure this repo exists
-          default: envelope-parasol-catalog
+          default: all-location-parasol
         componentName:
           title: Component Name of the API
           type: string
@@ -118,12 +118,12 @@ spec:
           - other
 
   steps:
-    - id: fetch-envelope=repo
-      name: Fetch envelope catalog repo
+    - id: fetch-all-location-repo
+      name: Fetch all-locations catalog repo
       action: fetch:template
       targetPath: ../.
       input:
-        url: {{ 'https://${{ parameters.gitlabHost }}/${{ parameters.gitlabOrganization }}/${{ parameters.envelopeRepositoryName }}' }}
+        url: {{ 'https://${{ parameters.gitlabHost }}/${{ parameters.gitlabOrganization }}/${{ parameters.allLocationRepositoryName }}' }}
         
 
     # Step1: Create catalog-info file for the component
@@ -154,7 +154,7 @@ spec:
       name: Open PR with for all-catalog
       action: publish:gitlab:merge-request
       input: 
-        repoUrl: {{ '"${{ parameters.gitlabHost }}?repo=${{ parameters.envelopeRepositoryName }}&owner=${{ parameters.gitlabOrganization }}"' }}
+        repoUrl: {{ '"${{ parameters.gitlabHost }}?repo=${{ parameters.allLocationRepositoryName }}&owner=${{ parameters.gitlabOrganization }}"' }}
         title: Open PR with catalog-info.yaml
         description: Open PR with catalog-info.yaml
         branchName: {{ '"${{ parameters.componentName }}-create"' }}
