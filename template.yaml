@@ -147,6 +147,8 @@ spec:
           system: {{ '${{ parameters.system }}' }}
           apiType: {{ '${{ parameters.apiType }}' }}
           apiPathText: {{ '${{ parameters.apiPathText }}' }}
+          allLocationGitlabOrganization: {{ '${{ parameters.allLocationGitlabOrganization }}' }}
+          allLocationGitlabOrganization: {{ '${{ parameters.allLocationGitlabOrganization }}' }}
 
     
     # Merge catalog-info and techdocs into EXISTING repo   - only EXISTING REPO
