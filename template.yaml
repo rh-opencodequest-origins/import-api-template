@@ -10,7 +10,7 @@ metadata:
     - register
     - api
 spec:
-  owner: platformengineers
+  owner: group:default/platformengineers
   system: rhdh
   type: template
 
@@ -94,7 +94,7 @@ spec:
           title: Owner of the API
           description: Select an owner from the list or enter a reference to a Group or a User
           type: string
-          default: group:default/dev1
+          default: user:default/dev1
           ui:field: EntityPicker
           ui:options:
             catalogFilter:
