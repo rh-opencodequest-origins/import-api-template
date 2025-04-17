@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: import-api-catalog
   title: Import Existing API
-  description: Import existing API, autocreate config-info.yaml and conditionally setup techdocs.
+  description: Import existing API, autocreating a catalog-info.yaml and optionally performing TechDocs setup.
   tags:
     - import
     - catalog
@@ -25,30 +25,30 @@ spec:
         - apiPathText
       properties:
         gitlabHost:
-          title: Gitlab hostname
+          title: GitLab Hostname
           type: string
-          description: Your gitlab
+          description: Your GitLab instance hostname
           default: {{ gitlab_host }}
           enum:
             - {{ gitlab_host }}
         gitlabOrganization:
-          title: GitLab Organization of Existing API
+          title: GitLab Organization that contains the API Spec
           type: string
           default: parasol
         repositoryName:
-          title: Repository name of Existing API
+          title: Repository Containing the API Spec
           type: string
           description: Please ensure this repo exists
           default: parasol-store-api
         apiPathText:
-          title: API specification path
-          description: This will need to be the full path where the API specification is stored in the repository. 
+          title: API Specification URL
+          description: This must be the the full URL where the API specification is stored in the repository
           type: string
         apiType:
           title: Type of API
           type: string
           default: openapi
-          description: Usual types are openapi, 
+          description: Typically OpenAPI Spec, but others are supported
           enum:
           - openapi
           - grpc
@@ -59,7 +59,7 @@ spec:
           - Other
           allowArbitraryValues: true
 
-    - title: New Component details
+    - title: New API Details
       required:
         - allLocationGitlabOrganization
         - allLocationRepositoryName
@@ -69,22 +69,23 @@ spec:
 
       properties:
         allLocationGitlabOrganization:
-          title: Component GitLab Organization
+          title: GitLab Organization
           type: string
           default: parasol
+          desciption: The GitLab Organization that contains the repository where the API Entity will be created and stored
         allLocationRepositoryName:
-          title: Component Repository name
+          title: GitLab Repository Entity Name
           type: string
-          description: Please ensure this repo exists
+          description: The repository where the API Entity will be created and stored (ensure this repo exists)
           default: all-location-parasol
         componentName:
-          title: Component Name of the API
+          title: Name of the API Entity
           type: string
-          description: Name of the component. (Defaults to the repo name)
+          description: Name of the API (defaults to the name of the repository that contains the API spec)
           default: parasol-store-api
         system:
-          title: System name
-          description: This is the application name that helps to group components easily
+          title: System Name
+          description: This is the System Entity that the API is part of
           type: string
           ui:field: EntityPicker
           ui:options:
@@ -102,8 +103,8 @@ spec:
                 - Group
                 - User
         description:
-          title: A short description of this component
-          description: A short description of this component
+          title: Short Description of this API
+          description: Enter a short description of this API
           type: string
           default: Open API specification for the parasol-store application
         lifecycle:
@@ -128,7 +129,7 @@ spec:
 
     # Step1: Create catalog-info file for the component
     - id: catalogTemplate
-      name: Fetch catalog-info  template
+      name: Fetch catalog-info template
       action: fetch:template
       input:
         url: ./templates
@@ -166,4 +167,4 @@ spec:
   output:
     links:
       - url: {{ '${{ steps.publishComponentMergeRequest.output.mergeRequestUrl }}' }}
-        title: 'Component merge request'
+        title: 'Component Merge Request'
